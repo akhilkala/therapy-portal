@@ -1,11 +1,5 @@
 import React, { ReactElement } from "react";
-import {
-  Link,
-  NavLink,
-  Route,
-  RouteComponentProps,
-  Switch,
-} from "react-router-dom";
+import { Link, NavLink, Route, Switch } from "react-router-dom";
 import { useToasts } from "react-toast-notifications";
 import Animation from "../components/Animation";
 import Input from "../components/Input";
@@ -17,11 +11,13 @@ import { deleteCall, post } from "../utils/requests";
 import { useConfirm } from "../hooks/useConfirm";
 import Confrim from "../components/Confirm";
 import useDocumentTitle from "../hooks/useDocumentTitle";
+import { useAuth } from "../context/AuthContext";
 
-export default function Admin({ match }: RouteComponentProps): ReactElement {
+export default function Admin(): ReactElement {
   useDocumentTitle("Manonaya | Admin");
   const adminFetcher = useFetch("/admin/data");
   const { addToast } = useToasts();
+  const auth = useAuth();
 
   if (adminFetcher.isLoading) {
     return (
@@ -48,9 +44,9 @@ export default function Admin({ match }: RouteComponentProps): ReactElement {
     addToast("User created successfully", { appearance: "success" });
   };
 
-  const deleteUser = async (username: string) => {
+  const deleteUser = async (id: string) => {
     try {
-      const res = await deleteCall(`/admin/delete-user/${username}`);
+      const res = await deleteCall(`/admin/delete-user/${id}`);
       addToast(res.message, { appearance: "success" });
       adminFetcher.fetch(false);
     } catch (err) {
@@ -63,22 +59,19 @@ export default function Admin({ match }: RouteComponentProps): ReactElement {
       <section>
         <h1 className="heading">
           Admin Panel
-          <Link to="/">
-            <i data-tip="Exit Admin Panel" className="fas fa-sign-out-alt"></i>
-            <ReactTooltip type="info" place="left" effect="solid" />
-          </Link>
+          <div onClick={auth?.logout}>
+            <i data-tip="Logout" className="fas fa-sign-out-alt"></i>
+            <ReactTooltip type="info" place="right" effect="solid" />
+          </div>
         </h1>
         <nav>
-          <NavLink exact activeClassName="active-link" to={`${match.path}`}>
+          <NavLink exact activeClassName="active-link" to={`/`}>
             User Actions
           </NavLink>
-          <NavLink
-            activeClassName="active-link"
-            to={`${match.path}/patient-actions`}
-          >
+          <NavLink activeClassName="active-link" to={`/patient-actions`}>
             Patient Actions
           </NavLink>
-          <NavLink activeClassName="active-link" to={`${match.path}/feedback`}>
+          <NavLink activeClassName="active-link" to={`/feedback`}>
             Feedback
           </NavLink>
         </nav>
@@ -87,7 +80,7 @@ export default function Admin({ match }: RouteComponentProps): ReactElement {
         <Switch>
           <Route
             exact
-            path={`${match.path}`}
+            path={`/`}
             render={() => (
               <AdminUserPanel
                 users={adminFetcher.data.users}
@@ -97,7 +90,7 @@ export default function Admin({ match }: RouteComponentProps): ReactElement {
             )}
           />
           <Route
-            path={`${match.path}/feedback`}
+            path={`/feedback`}
             render={() => (
               <AdminFeedback
               // feedback={adminFetcher.data.users}
@@ -113,6 +106,7 @@ export default function Admin({ match }: RouteComponentProps): ReactElement {
 interface AdminUserProps {
   users: [
     {
+      _id: string;
       username: string;
       isTeacher: boolean;
       isAdmin: boolean;
@@ -183,7 +177,7 @@ function AdminUserPanel({
                   </div>
                   <div
                     onClick={confirmed(
-                      () => deleteUser(user.username),
+                      () => deleteUser(user._id),
                       `The account ${user.username} will be permanently deleted`
                     )}
                     className="delete"

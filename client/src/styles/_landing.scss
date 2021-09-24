@@ -5,11 +5,18 @@
         font-size: 4rem;
     }
     .top{
-        background-color: red;
         min-height: 8vh;
         padding: 1rem 2rem;
         display: flex;
         align-items: center;
+        justify-content: space-between;
+
+        .logo{
+            background-color: lightcoral;
+            width: 3.25rem;
+            height: 3.25rem;
+            border-radius: 50%;
+        }
     }
 }
 

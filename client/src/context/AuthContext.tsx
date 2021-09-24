@@ -16,7 +16,6 @@ type Value = {
   logout: () => void;
   loading: Boolean;
   updateUser: (userData: any) => void;
-  isAdmin: () => boolean;
 };
 
 const AuthContext = createContext<Nullable<Value>>(null);
@@ -61,8 +60,6 @@ export default function AuthProvider({ children }: Children): ReactElement {
     }
   };
 
-  const isAdmin = () => user?.role === 1;
-
   const updateUser = (userData: User) => {
     setUser(userData);
   };
@@ -73,7 +70,6 @@ export default function AuthProvider({ children }: Children): ReactElement {
     logout,
     loading,
     updateUser,
-    isAdmin,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

@@ -13,7 +13,7 @@ export const getData = route(async (req, res) => {
 });
 
 export const deleteAccount = route(async (req, res) => {
-  await User.deleteOne({ username: req.params.id });
+  await User.deleteOne({ _id: req.params.id });
   await Patient.deleteOne({ user: req.params.id });
   res.status(200).json({
     message: "User deleted",

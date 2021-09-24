@@ -1,7 +1,8 @@
 import React, { ReactElement } from "react";
-import { Route } from "react-router-dom";
+import { Route, useLocation } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import Landing from "../pages/Landing";
+import NotFound from "../pages/NotFound";
 import Animation from "./Animation";
 
 interface Props {
@@ -15,6 +16,7 @@ export default function PrivateRoute({
   exact = false,
 }: Props): ReactElement {
   const auth = useAuth();
+  const location = useLocation();
 
   return (
     <Route
@@ -29,6 +31,8 @@ export default function PrivateRoute({
                 <Animation animation="loading" />
               </div>
             );
+
+          if (location.pathname !== "/") return <NotFound />;
           return <Landing />;
         }
       }}
