@@ -10,8 +10,13 @@ export default function Landing({}: Props): ReactElement {
 
   return (
     <div className="landing">
+      <div className="top">
+        <div className="logo"></div>
+        <nav></nav>
+        <button onClick={handleLoginOpen}>login</button>
+      </div>
+      <h1>Manoonaya</h1>
       <Login open={loginOpen} handleClose={handleLoginClose} />
-      <button onClick={handleLoginOpen}>login</button>
     </div>
   );
 }

@@ -7,8 +7,8 @@ import React, {
 } from "react";
 import { Nullable, User, Children } from "../utils/types";
 import { post } from "../utils/requests";
-import { useHistory } from "react-router-dom";
 import jwt from "jwt-decode";
+import { useHistory } from "react-router-dom";
 
 type Value = {
   user: Nullable<User>;
@@ -35,7 +35,6 @@ export default function AuthProvider({ children }: Children): ReactElement {
   }, []);
 
   const login = async (username: string, password: string) => {
-    // setLoading(true);
     try {
       const res = await post("/auth/login", {
         username: username.trim(),

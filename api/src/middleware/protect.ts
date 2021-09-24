@@ -10,8 +10,10 @@ export default (role = "user") => {
 
       if (!req.user) {
         const token = req.headers?.authorization?.split(" ")[1] || "";
-        const user: any = jwt.verify(token, process.env.SECRET);
-        req.user = user;
+        jwt.verify(token, process.env.SECRET, (err, user: any) => {
+          if (err) return res.sendStatus(403);
+          req.user = user;
+        });
       }
 
       if (role == "admin" && !req.user.isAdmin) throw new Error();

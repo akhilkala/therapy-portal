@@ -38,6 +38,7 @@ export default function Input({
       )}
       {!!icon && icon}
       <input
+        autoComplete="off"
         value={state.value}
         onChange={state.handleChange}
         type={!seen ? (type ? type : "text") : "text"}

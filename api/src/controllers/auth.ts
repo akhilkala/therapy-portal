@@ -49,15 +49,25 @@ export const login = route(async (req, res) => {
   if (!process.env.SECRET || !process.env.SECRET_2)
     throw new Error("Environment Invalid");
 
-  const token = jwt.sign({ ...user, password: undefined }, process.env.SECRET, {
-    expiresIn: "7d",
-  });
+  const accessToken = jwt.sign(
+    { ...user, password: undefined },
+    process.env.SECRET
+    // { expiresIn: "15s" }
+  );
+
+  // const refreshToken = jwt.sign(
+  //   { ...user, password: undefined },
+  //   process.env.SECRET_2
+  // );
 
   // const refreshToken = jwt.sign({ user: user._id }, process.env.SECRET_2, {
   //   expiresIn: '7d',
   // });
 
   res.status(200).send({
-    token,
+    token: accessToken,
+    // refreshToken,
   });
 });
+
+export const token = route(async (req, res) => {});

@@ -16,8 +16,10 @@ import cn from "classnames";
 import { deleteCall, post } from "../utils/requests";
 import { useConfirm } from "../hooks/useConfirm";
 import Confrim from "../components/Confirm";
+import useDocumentTitle from "../hooks/useDocumentTitle";
 
 export default function Admin({ match }: RouteComponentProps): ReactElement {
+  useDocumentTitle("Manonaya | Admin");
   const adminFetcher = useFetch("/admin/data");
   const { addToast } = useToasts();
 

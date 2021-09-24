@@ -42,6 +42,10 @@ const patientSchema = new mongoose.Schema({
   report: [
     {
       therapy: String,
+      therapist: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+      },
       fileUrl: String,
       date: {
         type: Date,
