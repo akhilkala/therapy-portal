@@ -28,6 +28,10 @@ html {
 div, aside, main, section, input, textarea, button{
   font-family: $font-family, sans-serif, serif;
 }
+
+h1{
+  font-family: $font-family1, sans-serif, serif;
+}
   
 body {
   background-color: $body-bg;
@@ -132,4 +136,8 @@ button {
     color: #222;
     margin-bottom: 1rem;
   }
+}
+
+.animation{
+  pointer-events: none;
 }

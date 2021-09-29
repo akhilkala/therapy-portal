@@ -5,7 +5,10 @@ import { route } from "../utils/utilities";
 require("dotenv").config();
 
 export const getData = route(async (req, res) => {
-  const [users, feedback] = await Promise.all([User.find(), Feedback.find()]);
+  const [users, feedback] = await Promise.all([
+    User.find(),
+    Feedback.find().populate("user", "username"),
+  ]);
   res.status(200).json({
     users,
     feedback,

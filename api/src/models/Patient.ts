@@ -12,6 +12,7 @@ export interface IPatient extends Document {
   ];
   report: [
     {
+      therapist: mongoose.Schema.Types.ObjectId;
       therapy: string;
       fileUrl: string;
     }
@@ -59,7 +60,7 @@ const patientSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
       },
-      done: {
+      needed: {
         type: Boolean,
         default: false,
       },
@@ -69,7 +70,7 @@ const patientSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
       },
-      done: {
+      needed: {
         type: Boolean,
         default: false,
       },
@@ -79,7 +80,7 @@ const patientSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
       },
-      done: {
+      needed: {
         type: Boolean,
         default: false,
       },
@@ -89,7 +90,7 @@ const patientSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
       },
-      done: {
+      needed: {
         type: Boolean,
         default: false,
       },
@@ -99,7 +100,7 @@ const patientSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
       },
-      done: {
+      needed: {
         type: Boolean,
         default: false,
       },
@@ -109,7 +110,7 @@ const patientSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
       },
-      done: {
+      needed: {
         type: Boolean,
         default: false,
       },
@@ -119,7 +120,7 @@ const patientSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
       },
-      done: {
+      needed: {
         type: Boolean,
         default: false,
       },

@@ -6,4 +6,9 @@ export type Children = {
   children: ReactElement | ReactElement[];
 };
 
-export type User = any;
+export type User = {
+  _id: string;
+  username: string;
+  isTeacher: boolean;
+  isAdmin: boolean;
+};

@@ -5,8 +5,7 @@ require("dotenv").config();
 export default (role = "user") => {
   return (req: Request, res: Response, next: NextFunction) => {
     try {
-      if (!process.env.SECRET || !process.env.ADMIN_TOKEN)
-        throw new Error("Environment Invalid");
+      if (!process.env.SECRET) throw new Error("Environment Invalid");
 
       if (!req.user) {
         const token = req.headers?.authorization?.split(" ")[1] || "";

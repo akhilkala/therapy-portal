@@ -9,7 +9,6 @@ import User from "./pages/User";
 
 export default function App(): ReactElement {
   const auth = useAuth();
-
   const getHomeComponent = () => {
     if (auth?.user?.isAdmin) return Admin;
     else if (auth?.user?.isTeacher) return Teacher;
@@ -19,10 +18,15 @@ export default function App(): ReactElement {
   return (
     <React.Fragment>
       <Switch>
-        <Route path="/admin" component={Admin} />
         <PrivateRoute
           exact
-          path={["/", "/patient-actions", "/feedback"]}
+          path={[
+            "/",
+            "/patient-actions",
+            "/feedback",
+            "/upload-report",
+            "/user-reports",
+          ]}
           component={getHomeComponent()}
         />
         <Route path="*" component={NotFound} />

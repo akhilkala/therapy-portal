@@ -40,7 +40,7 @@ export default function AuthProvider({ children }: Children): ReactElement {
         password,
       });
 
-      const user = jwt(res.token);
+      const user: User = jwt(res.token);
       setUser(user);
       localStorage.setItem("token", res.token);
 

@@ -21,7 +21,8 @@ export default function Login({ open, handleClose }: Props): ReactElement {
     handleClose();
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
     setError("");
     if (!username.value || !password.value)
       return setError("All fields are required");
@@ -51,16 +52,18 @@ export default function Login({ open, handleClose }: Props): ReactElement {
             Hi, <span>Welcome!</span>
           </h1>
           {!!error && <div className="error">{error}</div>}
-          <Input state={username} placeholder="Username" underline />
-          <Input
-            state={password}
-            placeholder="Password"
-            type="password"
-            underline
-          />
-          <button onClick={handleSubmit} className="btn">
-            Login <i className="fas fa-sign-in-alt"></i>
-          </button>
+          <form onSubmit={handleSubmit}>
+            <Input state={username} placeholder="Username" underline />
+            <Input
+              state={password}
+              placeholder="Password"
+              type="password"
+              underline
+            />
+            <button className="btn">
+              Login <i className="fas fa-sign-in-alt"></i>
+            </button>
+          </form>
         </aside>
       </Modal>
     </div>

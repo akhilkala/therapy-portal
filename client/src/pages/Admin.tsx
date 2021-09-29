@@ -12,6 +12,7 @@ import { useConfirm } from "../hooks/useConfirm";
 import Confrim from "../components/Confirm";
 import useDocumentTitle from "../hooks/useDocumentTitle";
 import { useAuth } from "../context/AuthContext";
+import { User } from "../utils/types";
 
 export default function Admin(): ReactElement {
   useDocumentTitle("Manonaya | Admin");
@@ -92,11 +93,10 @@ export default function Admin(): ReactElement {
           <Route
             path={`/feedback`}
             render={() => (
-              <AdminFeedback
-              // feedback={adminFetcher.data.users}
-              />
+              <AdminFeedback feedback={adminFetcher.data.feedback} />
             )}
           />
+          <Route path={`/patient-actions`} render={() => <AdminActions />} />
         </Switch>
       </main>
     </div>
@@ -104,14 +104,7 @@ export default function Admin(): ReactElement {
 }
 
 interface AdminUserProps {
-  users: [
-    {
-      _id: string;
-      username: string;
-      isTeacher: boolean;
-      isAdmin: boolean;
-    }
-  ];
+  users: User[];
   createUser: (
     username: string,
     password: string,
@@ -127,7 +120,10 @@ function AdminUserPanel({
   deleteUser,
 }: AdminUserProps): ReactElement {
   const search = useInputState();
+  const fullName = useInputState();
   const username = useInputState();
+  const age = useInputState();
+  const gender = useInputState();
   const password = useInputState();
   const confirmPassword = useInputState();
   const [isTeacher, setIsTeacher] = React.useState(false);
@@ -191,13 +187,6 @@ function AdminUserPanel({
       </aside>
       <aside className="create">
         <h1>Create user</h1>
-        <Input state={username} placeholder="Username" />
-        <Input state={password} placeholder="Password" type="password" />
-        <Input
-          state={confirmPassword}
-          placeholder="Confirm Password"
-          type="password"
-        />
         <div className="switch">
           <button
             onClick={() => setIsTeacher(false)}
@@ -212,6 +201,21 @@ function AdminUserPanel({
             Therapist
           </button>
         </div>
+        <Input state={fullName} placeholder="Full Name" />
+        <Input state={username} placeholder="Username" />
+        <Input state={password} placeholder="Password" type="password" />
+        <Input
+          state={confirmPassword}
+          placeholder="Confirm Password"
+          type="password"
+        />
+        {!isTeacher && (
+          <>
+            <Input state={age} placeholder="Age" />
+            <Input state={gender} placeholder="Gender" />
+          </>
+        )}
+
         <button
           onClick={handleCreate}
           className={cn("submit", { therapist: isTeacher })}
@@ -223,35 +227,49 @@ function AdminUserPanel({
   );
 }
 
-interface AdminFeedbackProps {}
+interface AdminFeedbackProps {
+  feedback: [
+    {
+      message: string;
+      user: {
+        username: string;
+      };
+    }
+  ];
+}
 
-function AdminFeedback({}: AdminFeedbackProps): ReactElement {
-  const search = useInputState();
+function AdminFeedback({ feedback }: AdminFeedbackProps): ReactElement {
   return (
     <div className="admin-feedback">
-      <Input
-        state={search}
-        placeholder="Search by patient or therapist"
-        icon={<i style={{ cursor: "default" }} className="fas fa-search"></i>}
-      />
       <div className="list">
-        <div className="feedback-card">
-          <div className="top">
-            <div className="name">
-              <span>Patient:</span> {"Akhil"}
+        {feedback.map((details) => {
+          return (
+            <div className="feedback-card">
+              <div className="top">
+                <div className="name">
+                  <span>Patient:</span> {details.user.username}
+                </div>
+              </div>
+              <div className="message">{details.message}</div>
             </div>
-            <div className="faculty-name">
-              <span>Therapist:</span> {"Akhil"}
-            </div>
-          </div>
-          <div className="message">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Beatae, est
-            voluptatum obcaecati ducimus eligendi quis facilis non praesentium,
-            incidunt vel ratione officia aperiam, sunt quo nam impedit error
-            dolor dignissimos.
-          </div>
-        </div>
+          );
+        })}
       </div>
+    </div>
+  );
+}
+
+function AdminActions(): ReactElement {
+  const username = useInputState();
+
+  return (
+    <div className="admin-actions">
+      <section className="action">
+        <h2>Upload History</h2>
+        <div className="body">
+          <Input state={username} placeholder="Username" />
+        </div>
+      </section>
     </div>
   );
 }

@@ -13,10 +13,6 @@ const feedbackSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
     },
-    facultyName: {
-      type: String,
-      required: true,
-    },
     message: {
       type: String,
       required: true,

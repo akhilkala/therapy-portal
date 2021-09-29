@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import multer, { FileFilterCallback } from "multer";
+import { v4 as uuid } from "uuid";
 
 type Route = (req: Request, res: Response, next: NextFunction) => any;
 
@@ -12,7 +13,7 @@ const storage = multer.diskStorage({
     cb(null, "src/uploads/");
   },
   filename: (req, file, cb) => {
-    cb(null, new Date().toISOString() + file.originalname);
+    cb(null, uuid());
   },
 });
 

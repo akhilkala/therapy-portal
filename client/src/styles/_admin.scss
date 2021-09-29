@@ -100,7 +100,7 @@
         flex-direction: column;
         .input-container{
             width: 80%;
-            margin: 1rem auto;
+            margin: .6rem auto;
         }
         .switch{
             margin: 1rem auto;
@@ -141,6 +141,7 @@
 .admin-feedback{
     height: 80vh;
     padding: 2rem 0;
+    overflow: auto;
     .input-container{
         width: 50%;
         margin: auto;
@@ -174,5 +175,14 @@
         margin-top: .5rem;
         padding-top: .5rem;
         border-top: 1px solid #5555;
+    }
+}
+
+.admin-actions{
+    height: 80vh;
+    padding: 2rem 0;
+    overflow: auto;
+    .action{
+        display: flex;
     }
 }
