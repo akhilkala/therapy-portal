@@ -93,14 +93,100 @@
         .top{
             display: flex;
             justify-content: flex-start;
+            .btn{
+                background-color: $therapist;
+                color: #fff;
+                margin-left: 1rem;
+            }
         }
-        .btn{
-            background-color: $therapist;
-            color: #fff;
+    }
+    .main{
+        display: flex;
+        aside.left{
+            width: 30%;
         }
-        .dropdown{
-            margin: 0 1.7rem;
-            width: 15rem;
+        aside{
+            .item{
+                margin: .25rem 0;
+
+                &--alt{
+                    h4{
+                        margin-bottom: -1rem;
+                        margin-top: 1rem;
+                    }
+                }
+                .sub-items{
+                    display: flex;
+                    gap: 1.2rem;
+                    &:not(:last-child){
+                        border-right: 1px solid #0005;
+                    }
+                    span{
+                        color: $therapist;
+                    }
+                }
+            }
+            &:first-child{
+                border-right: 1px solid #0005;
+                padding-right: 3rem;
+                margin-right: 2rem;
+            }
+            section{
+                h4{
+                    font-size: 1.5rem;
+                    margin-bottom: .5rem;
+                }
+                margin-bottom: 1rem;
+            }
+            .history{
+                padding-top: 1rem;
+                h4{
+                    margin-bottom: .5rem;
+                }
+                .btn{
+                    background-color: inherit;
+                    color: $therapist;                    
+                }
+                .dropdown{
+                    font-size: .8rem;
+                }
+            }
+        }
+        .cards{
+            display: flex;
+            flex-direction: column;
+            margin: 1rem auto;
+            i{
+                cursor: pointer;
+                transition: .1s all;
+                margin-left: 1rem;
+                &:hover{
+                    color: $patient;
+                }
+            }
+            .report-card{
+                background-color: #fafafa;
+                margin: .5rem 0;
+                padding: .5rem 0;
+                padding-right: 1rem;
+                border-radius: 5px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                min-width: 23rem;
+                .left{
+                    display: flex;
+                    h4{
+                        font-size: 1rem;
+                        margin-right: 1rem;
+                        span{
+                            color: $patient;
+                            margin-left: .5rem;
+                        }
+                    }
+
+                }
+            }
         }
     }
 }
@@ -149,11 +235,25 @@
         display: flex;
         flex-direction: column;
         align-items: center;
+        .history{
+           margin: 1rem;
+           display: flex;
+           align-items: center;
+           h4{
+               margin-bottom: .5rem;
+               font-size: 1.25rem;
+               margin-right: 1rem;
+           }
+           .btn{
+               background: inherit;
+               color: $patient;
+           }
+        }
         .animation{
             margin-bottom: -1rem;
         }
         .item{
-            margin: 1rem 0;
+            margin: .5rem 0;
             font-size: 1.25rem;
             display: flex;
             gap: .5rem;
@@ -162,10 +262,10 @@
                 flex-direction: column;
                 align-items: center;
                 margin-top:1rem;
-                margin-bottom: -2rem;
                 .sub-items{
                     display: flex;
                     gap: 1rem;
+                    margin-top: -2rem;
                     .sub-item{
                         padding: 0 1rem;
                         span{

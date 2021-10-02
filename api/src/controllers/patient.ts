@@ -17,3 +17,10 @@ export const postHistory = route(async (req, res) => {
 
   res.status(200).json(patient);
 });
+
+export const getReports = route(async (req, res) => {
+  const patient = await Patient.findOne({ user: req.user._id })
+    .populate("report.therapist", "fullName")
+    .lean();
+  res.status(200).json(patient.report);
+});

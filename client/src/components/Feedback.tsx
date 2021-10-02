@@ -17,8 +17,8 @@ export default function Feedback({ open, handleClose }: Props): ReactElement {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true);
     if (!feedback.value) return;
+    setLoading(true);
     try {
       await post("/feedback", { message: feedback.value });
       setLoading(false);

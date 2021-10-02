@@ -45,6 +45,34 @@
 
 .admin-user{
     display: flex;
+    .therapist-input{
+        transform: translateY(-.45rem);
+        margin-top:1rem;
+        width: 18rem;
+        padding: .4rem .5rem;
+        font-size: 1.2rem;
+        border-radius: 3px;
+        box-shadow: 0 0 5pt 0.5pt #D3D3D322;
+        border: 1px solid #eeea;
+        transition: .5s all;
+        &:focus{
+            box-shadow: 0 0 5pt 0.5pt #D3D3D3;
+        }
+        margin-left: 2rem;
+        margin-right: 2rem;
+    }
+    .center{
+        justify-content: flex-start;
+        align-items: center;
+        margin-left: 3rem;
+    }
+    .add{
+        margin-left: 1rem;
+        cursor: pointer;
+        &:hover{
+            color: $patient;
+        }
+    }
     aside{
         flex:1;
         height: 80vh;
@@ -182,7 +210,62 @@
     height: 80vh;
     padding: 2rem 0;
     overflow: auto;
+    h2{
+        margin-bottom: .5rem;
+    }
     .action{
+        display: block;
+        height: max-content;
+        border-bottom: 1px solid #0005;
+        padding-bottom: 1rem;
+        .body{
+            display: flex;
+            align-items: flex-start;
+        }
+    }
+    .file{
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 2rem;
+        margin-left: 1.5rem;
+        label{
+            margin-left: 1rem;
+            cursor: pointer;
+            background-color: inherit;
+            border: 1px solid #ccc;
+            color: $primary;
+        }
+        .name{
+            width: 15rem;
+            min-width: max-content;
+            border-radius: 5px;
+            border: 1px solid #eee;
+            box-shadow: 0 0 5pt 0.25pt #D3D3D322;
+            display: flex;
+            align-items: center;
+            padding-left: .5rem;
+        }
+    }
+    .btn{
+        margin-left: 1rem;
+        background-color: $primary;      
+
+        &--alt{
+            margin-left: 0;
+        }
+
+        &--2{
+            transform: translateY(.25rem);
+        }
+    }
+
+    .input-container{
+        margin-top: .25rem;
+        margin-bottom: 1rem;
+        margin-right: 1rem;
+    }
+
+    .inputs{
         display: flex;
     }
 }

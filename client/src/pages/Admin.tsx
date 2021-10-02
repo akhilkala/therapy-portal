@@ -7,12 +7,25 @@ import useFetch from "../hooks/useFetch";
 import useInputState from "../hooks/useInputState";
 import ReactTooltip from "react-tooltip";
 import cn from "classnames";
-import { deleteCall, post } from "../utils/requests";
+import { deleteCall, get, post } from "../utils/requests";
 import { useConfirm } from "../hooks/useConfirm";
 import Confrim from "../components/Confirm";
 import useDocumentTitle from "../hooks/useDocumentTitle";
 import { useAuth } from "../context/AuthContext";
 import { User } from "../utils/types";
+import Dropdown from "react-dropdown";
+import "react-dropdown/style.css";
+
+const dropdownOptions = [
+  { value: "0", label: "Vision Therapy" },
+  { value: "1", label: "Speech Therapy" },
+  { value: "2", label: "Occupational Therapy" },
+  { value: "3", label: "Play & Art Therapy" },
+  { value: "4", label: "Counselling" },
+  { value: "5", label: "Clinical Psycology" },
+  { value: "6", label: "Special Education" },
+  { value: "7", label: "Vocational Training" },
+];
 
 export default function Admin(): ReactElement {
   useDocumentTitle("Manonaya | Admin");
@@ -29,15 +42,25 @@ export default function Admin(): ReactElement {
   }
 
   const createUser = async (
+    fullName: string,
     username: string,
     password: string,
     confirmPassword: string,
-    isTeacher: boolean
+    isTeacher: boolean,
+    age: string,
+    gender: string
   ) => {
     if (password !== confirmPassword)
       return addToast("Passwords do not match", { appearance: "error" });
     try {
-      await post("/auth/register", { username, password, isTeacher });
+      await post("/auth/register", {
+        fullName,
+        username,
+        password,
+        isTeacher,
+        age,
+        gender,
+      });
     } catch (err: any) {
       return addToast(err.response.data.message, { appearance: "error" });
     }
@@ -106,10 +129,13 @@ export default function Admin(): ReactElement {
 interface AdminUserProps {
   users: User[];
   createUser: (
+    fullName: string,
     username: string,
     password: string,
     confirmPassword: string,
-    isTeacher: boolean
+    isTeacher: boolean,
+    age: string,
+    gender: string
   ) => Promise<void>;
   deleteUser: (username: string) => Promise<void>;
 }
@@ -129,17 +155,56 @@ function AdminUserPanel({
   const [isTeacher, setIsTeacher] = React.useState(false);
   const { confirmed, options } = useConfirm();
 
+  const [therapies, setTherapies] = React.useState([
+    {
+      therapist: "",
+      therapy: "0",
+    },
+  ]);
+
   const handleCreate = () => {
     createUser(
+      fullName.value,
       username.value,
       password.value,
       confirmPassword.value,
-      isTeacher
+      isTeacher,
+      age.value,
+      gender.value
     );
     username.handleReset();
     password.handleReset();
     confirmPassword.handleReset();
+    fullName.handleReset();
+    age.handleReset();
+    gender.handleReset();
     setIsTeacher(false);
+  };
+
+  const handleSetTherapist = (value: string, index: number) => {
+    setTherapies((prev) =>
+      prev.map((option: any, i: number) =>
+        i === index
+          ? {
+              ...option,
+              therapist: value,
+            }
+          : option
+      )
+    );
+  };
+
+  const handleDropdownChange = (dropdownOption: any, index: number) => {
+    setTherapies((prev) =>
+      prev.map((option: any, i: number) =>
+        i === index
+          ? {
+              ...option,
+              therapy: dropdownOption.value,
+            }
+          : option
+      )
+    );
   };
 
   return (
@@ -213,9 +278,41 @@ function AdminUserPanel({
           <>
             <Input state={age} placeholder="Age" />
             <Input state={gender} placeholder="Gender" />
+            {[...Array(therapies.length)].map((_, i: number) => (
+              <div className="flex center">
+                <input
+                  placeholder="Therapist Username"
+                  className="therapist-input"
+                  value={therapies[i].therapist}
+                  onChange={(e: any) => handleSetTherapist(e.target.value, i)}
+                />
+                <Dropdown
+                  options={dropdownOptions}
+                  value={dropdownOptions[0]}
+                  placeholder="Select an option"
+                  className="dropdown"
+                  onChange={(option: any) => handleDropdownChange(option, i)}
+                />
+                {i === therapies.length - 1 && (
+                  <div
+                    onClick={() =>
+                      setTherapies((prev: any) => [
+                        ...prev,
+                        {
+                          therapist: "",
+                          therapy: "0",
+                        },
+                      ])
+                    }
+                    className="add"
+                  >
+                    <i className="fas fa-plus"></i>
+                  </div>
+                )}
+              </div>
+            ))}
           </>
         )}
-
         <button
           onClick={handleCreate}
           className={cn("submit", { therapist: isTeacher })}
@@ -261,6 +358,70 @@ function AdminFeedback({ feedback }: AdminFeedbackProps): ReactElement {
 
 function AdminActions(): ReactElement {
   const username = useInputState();
+  const username2 = useInputState();
+  const fileRef = React.useRef<HTMLInputElement>(null);
+  const [placeholder, setPlaceholder] = React.useState("No Report Chosen");
+  const [loading, setLoading] = React.useState(false);
+  const [loading2, setLoading2] = React.useState(false);
+  const { addToast } = useToasts();
+
+  const [data, setData] = React.useState<any>(null);
+  const fullName = useInputState();
+  const age = useInputState();
+  const gender = useInputState();
+
+  const setFileName = (e: any) => {
+    setPlaceholder(e.target.files[0].name);
+  };
+
+  const handleUploadHistory = async (e: any) => {
+    e.preventDefault();
+
+    //@ts-ignore
+    const file = fileRef.current.files[0];
+
+    if (!username.value || !file)
+      return addToast("All fields are required", { appearance: "error" });
+    if (file.type !== "application/pdf")
+      return addToast("File type not supported", { appearance: "error" });
+
+    setLoading(true);
+    const data = new FormData();
+    data.append("file", file);
+    data.append("username", username.value);
+
+    try {
+      await post("/history", data, {}, true);
+      username.handleReset();
+      return addToast("History updated successfully", {
+        appearance: "success",
+      });
+    } catch (err: any) {
+      return addToast(err.response.data.message, { appearance: "error" });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleGetData = async (e: any) => {
+    e.preventDefault();
+    if (!username2.value) return;
+    setLoading2(true);
+    try {
+      const res = await get(`/admin/user-data/${username2.value}`);
+      console.log(res);
+      setData(res);
+      username2.handleReset();
+
+      fullName.setValue(res.user.fullName);
+      age.setValue(res.age);
+      gender.setValue(res.gender);
+    } catch (err: any) {
+      return addToast(err.response.data.message, { appearance: "error" });
+    } finally {
+      setLoading2(false);
+    }
+  };
 
   return (
     <div className="admin-actions">
@@ -268,7 +429,55 @@ function AdminActions(): ReactElement {
         <h2>Upload History</h2>
         <div className="body">
           <Input state={username} placeholder="Username" />
+          <div className="file">
+            <input
+              style={{ display: "none" }}
+              type="file"
+              name="report"
+              id="report"
+              ref={fileRef}
+              onChange={setFileName}
+            />
+            <div className="name">{placeholder}</div>
+            <label htmlFor="report" className="btn">
+              Upload
+            </label>
+          </div>
+          <button
+            disabled={loading}
+            onClick={handleUploadHistory}
+            className="btn"
+          >
+            Submit
+          </button>
         </div>
+      </section>
+      <section className="action">
+        <h2>Get User Data</h2>
+        <div className="body">
+          <Input state={username2} placeholder="Username" />
+          <button
+            onClick={handleGetData}
+            disabled={loading2}
+            className="btn btn--2"
+          >
+            Submit
+          </button>
+        </div>
+        {!!data && (
+          <>
+            <div className="inputs">
+              <Input
+                state={fullName}
+                placeholder="Full Name"
+                label="Full Name"
+              />
+              <Input state={age} placeholder="Age" label="Age" />
+              <Input state={gender} placeholder="Gender" label="Gender" />
+            </div>
+            <button className="btn btn--alt">Update</button>
+          </>
+        )}
       </section>
     </div>
   );

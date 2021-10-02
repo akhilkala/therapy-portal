@@ -5,9 +5,16 @@ import notFound from "../assets/animations/404.json";
 import error from "../assets/animations/error.json";
 import user from "../assets/animations/user.json";
 import loading2 from "../assets/animations/loading2.json";
+import loading3 from "../assets/animations/loading3.json";
 import cn from "classnames";
 
-type IAnimation = "loading" | "not-found" | "error" | "user" | "loading2";
+type IAnimation =
+  | "loading"
+  | "not-found"
+  | "error"
+  | "user"
+  | "loading2"
+  | "loading3";
 
 interface Props {
   width?: number;
@@ -24,6 +31,7 @@ const animations = {
   error,
   user,
   loading2,
+  loading3,
 };
 
 export default function Animation({

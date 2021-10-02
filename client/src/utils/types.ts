@@ -7,8 +7,10 @@ export type Children = {
 };
 
 export type User = {
+  fullName: string;
   _id: string;
   username: string;
   isTeacher: boolean;
   isAdmin: boolean;
+  patient: any;
 };

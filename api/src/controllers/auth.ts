@@ -2,10 +2,11 @@ import User from "../models/User";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import { route } from "../utils/utilities";
+import Patient from "../models/Patient";
 require("dotenv").config();
 
 export const register = route(async (req, res) => {
-  const { username, password, isTeacher } = req.body;
+  const { fullName, username, password, isTeacher, age, gender } = req.body;
 
   const exisitngUser = await User.findOne({ username });
 
@@ -16,14 +17,22 @@ export const register = route(async (req, res) => {
   }
 
   const user = await new User({
+    fullName,
     username,
     password,
     isTeacher: !!isTeacher,
   }).save();
 
+  if (!isTeacher) {
+    await new Patient({
+      user: user._id,
+      age,
+      gender,
+    }).save();
+  }
+
   res.status(200).json({
     message: "User Created Succesfully",
-    user,
   });
 });
 
@@ -49,8 +58,17 @@ export const login = route(async (req, res) => {
   if (!process.env.SECRET || !process.env.SECRET_2)
     throw new Error("Environment Invalid");
 
+  let payload = {
+    ...user,
+    password: undefined,
+  };
+  if (!user.isTeacher && !user.isAdmin) {
+    const patient = await Patient.findOne({ user: user._id }).lean();
+    payload["patient"] = patient;
+  }
+
   const accessToken = jwt.sign(
-    { ...user, password: undefined },
+    payload,
     process.env.SECRET
     // { expiresIn: "15s" }
   );

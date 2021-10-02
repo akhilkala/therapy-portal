@@ -19,6 +19,9 @@
     font-weight: bold;
     display: flex;
     align-items: center;
+    &:disabled{
+        opacity: .5;
+    }
 }
 
 .input-container{
@@ -59,4 +62,8 @@
             }
         }
     }
+}
+
+.flex{
+    display: flex;
 }

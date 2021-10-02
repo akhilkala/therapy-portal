@@ -141,3 +141,19 @@ button {
 .animation{
   pointer-events: none;
 }
+
+/* width */
+::-webkit-scrollbar {
+  width: 14px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #757575;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  border-radius: 5px;
+  background-color: #ebf7fd;
+}

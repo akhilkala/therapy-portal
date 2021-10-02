@@ -4,6 +4,7 @@ export interface InputState {
   value: string;
   handleChange: (e: any) => void;
   handleReset: () => void;
+  setValue: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const useInputState = (init?: string): InputState => {
@@ -15,7 +16,7 @@ const useInputState = (init?: string): InputState => {
 
   const handleReset = (): void => setValue(initialState);
 
-  return { value, handleChange, handleReset };
+  return { value, handleChange, handleReset, setValue };
 };
 
 export default useInputState;
