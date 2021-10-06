@@ -6,7 +6,21 @@ import Patient from "../models/Patient";
 require("dotenv").config();
 
 export const register = route(async (req, res) => {
-  const { fullName, username, password, isTeacher, age, gender } = req.body;
+  const { fullName, username, password, isTeacher, age, gender, therapies } =
+    req.body;
+
+  if (!isTeacher) {
+    for (let i = 0; i < therapies.length; i++) {
+      const username = therapies[i].therapist;
+      const check = await User.findOne({ username });
+      if (!check || !check.isTeacher) {
+        return res.status(401).json({
+          message: `${username} is not a therapist`,
+        });
+      }
+      therapies[i]["therapist"] = check._id;
+    }
+  }
 
   const exisitngUser = await User.findOne({ username });
 
@@ -28,6 +42,7 @@ export const register = route(async (req, res) => {
       user: user._id,
       age,
       gender,
+      therapies,
     }).save();
   }
 
@@ -63,7 +78,10 @@ export const login = route(async (req, res) => {
     password: undefined,
   };
   if (!user.isTeacher && !user.isAdmin) {
-    const patient = await Patient.findOne({ user: user._id }).lean();
+    const patient = await Patient.findOne({ user: user._id }).populate(
+      "therapies._id",
+      "fullName"
+    );
     payload["patient"] = patient;
   }
 

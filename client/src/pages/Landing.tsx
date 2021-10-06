@@ -5,6 +5,9 @@ import visionImg from "../assets/therapies/vision.jpeg";
 import speechImg from "../assets/therapies/speech.jpg";
 import occupationalImg from "../assets/therapies/occupational.jpeg";
 import artImg from "../assets/therapies/art.jpeg";
+import counsellingImg from "../assets/therapies/counselling.jpeg";
+import clinicalImg from "../assets/therapies/clinical.jpeg";
+import specialImg from "../assets/therapies/special.jpg";
 
 import logo from "../assets/logo.jpg";
 
@@ -40,7 +43,7 @@ export default function Landing({}: Props): ReactElement {
           </button>
         </div>
         <main>
-          <h1>Manoonaya</h1>
+          <h1>Manonaya</h1>
           <h2>New Possibilites</h2>
           <p>
             We envisions a world in which children with special needs become an
@@ -53,6 +56,20 @@ export default function Landing({}: Props): ReactElement {
             </a>
             <a href="#contact" className="btn">
               Contact
+            </a>
+          </div>
+          <div className="socials">
+            <a href="https://in.pinterest.com/manonaya2021/_created/">
+              <i className="fab fa-pinterest"></i>
+            </a>
+            <a href="https://www.facebook.com/Manonaya-103609118741614/">
+              <i className="fab fa-facebook"></i>
+            </a>
+            <a href="https://www.instagram.com/manonaya2021">
+              <i className="fab fa-instagram"></i>
+            </a>
+            <a href="https://www.youtube.com/channel/UChhI12pRj3f6k6kYYCtdG4Q">
+              <i className="fab fa-youtube"></i>
             </a>
           </div>
         </main>
@@ -179,14 +196,14 @@ export default function Landing({}: Props): ReactElement {
             <div
               className="img"
               style={{
-                background: `url(${visionImg})`,
+                background: `url(${counsellingImg})`,
                 backgroundRepeat: "no-repeat",
                 backgroundSize: "cover",
                 backgroundPosition: "center",
               }}
             ></div>
             <div className="main">
-              <h2>Vision Therapy</h2>
+              <h2>Counselling</h2>
               <p>
                 Lorem ipsum dolor sit amet consectetur adipisicing elit.
                 Provident qui consequuntur eius rem iusto nobis consequatur!
@@ -200,14 +217,14 @@ export default function Landing({}: Props): ReactElement {
             <div
               className="img"
               style={{
-                background: `url(${visionImg})`,
+                background: `url(${clinicalImg})`,
                 backgroundRepeat: "no-repeat",
                 backgroundSize: "cover",
                 backgroundPosition: "center",
               }}
             ></div>
             <div className="main">
-              <h2>Vision Therapy</h2>
+              <h2>Clinical psychologist</h2>
               <p>
                 Lorem ipsum dolor sit amet consectetur adipisicing elit.
                 Provident qui consequuntur eius rem iusto nobis consequatur!
@@ -221,14 +238,14 @@ export default function Landing({}: Props): ReactElement {
             <div
               className="img"
               style={{
-                background: `url(${visionImg})`,
+                background: `url(${specialImg})`,
                 backgroundRepeat: "no-repeat",
                 backgroundSize: "cover",
                 backgroundPosition: "center",
               }}
             ></div>
             <div className="main">
-              <h2>Vision Therapy</h2>
+              <h2>Special Education</h2>
               <p>
                 Lorem ipsum dolor sit amet consectetur adipisicing elit.
                 Provident qui consequuntur eius rem iusto nobis consequatur!

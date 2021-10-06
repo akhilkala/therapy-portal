@@ -48,7 +48,8 @@ export default function Admin(): ReactElement {
     confirmPassword: string,
     isTeacher: boolean,
     age: string,
-    gender: string
+    gender: string,
+    therapies: any
   ) => {
     if (password !== confirmPassword)
       return addToast("Passwords do not match", { appearance: "error" });
@@ -60,9 +61,11 @@ export default function Admin(): ReactElement {
         isTeacher,
         age,
         gender,
+        therapies,
       });
     } catch (err: any) {
-      return addToast(err.response.data.message, { appearance: "error" });
+      addToast(err.response.data.message, { appearance: "error" });
+      throw err;
     }
     adminFetcher.fetch(false);
     addToast("User created successfully", { appearance: "success" });
@@ -135,7 +138,8 @@ interface AdminUserProps {
     confirmPassword: string,
     isTeacher: boolean,
     age: string,
-    gender: string
+    gender: string,
+    therapies: any
   ) => Promise<void>;
   deleteUser: (username: string) => Promise<void>;
 }
@@ -163,22 +167,31 @@ function AdminUserPanel({
   ]);
 
   const handleCreate = () => {
-    createUser(
-      fullName.value,
-      username.value,
-      password.value,
-      confirmPassword.value,
-      isTeacher,
-      age.value,
-      gender.value
-    );
-    username.handleReset();
-    password.handleReset();
-    confirmPassword.handleReset();
-    fullName.handleReset();
-    age.handleReset();
-    gender.handleReset();
-    setIsTeacher(false);
+    try {
+      createUser(
+        fullName.value,
+        username.value,
+        password.value,
+        confirmPassword.value,
+        isTeacher,
+        age.value,
+        gender.value,
+        therapies
+      );
+      username.handleReset();
+      password.handleReset();
+      confirmPassword.handleReset();
+      fullName.handleReset();
+      age.handleReset();
+      gender.handleReset();
+      setIsTeacher(false);
+      setTherapies([
+        {
+          therapist: "",
+          therapy: "0",
+        },
+      ]);
+    } catch (err) {}
   };
 
   const handleSetTherapist = (value: string, index: number) => {
@@ -336,21 +349,34 @@ interface AdminFeedbackProps {
 }
 
 function AdminFeedback({ feedback }: AdminFeedbackProps): ReactElement {
+  const search = useInputState();
+
   return (
     <div className="admin-feedback">
+      <Input
+        state={search}
+        placeholder="Search by username"
+        icon={<i style={{ cursor: "default" }} className="fas fa-search"></i>}
+      />
       <div className="list">
-        {feedback.map((details) => {
-          return (
-            <div className="feedback-card">
-              <div className="top">
-                <div className="name">
-                  <span>Patient:</span> {details.user.username}
+        {feedback
+          .filter((details) =>
+            details.user.username
+              .toLowerCase()
+              .includes(search.value.toLowerCase())
+          )
+          .map((details) => {
+            return (
+              <div className="feedback-card">
+                <div className="top">
+                  <div className="name">
+                    <span>Patient:</span> {details.user.username}
+                  </div>
                 </div>
+                <div className="message">{details.message}</div>
               </div>
-              <div className="message">{details.message}</div>
-            </div>
-          );
-        })}
+            );
+          })}
       </div>
     </div>
   );

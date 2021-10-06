@@ -66,6 +66,7 @@ function UserData(): ReactElement {
   };
 
   const handleHistoryChange = (option: any) => setHistory(option);
+  console.log(auth?.user?.patient);
 
   return (
     <div className="user-data">
@@ -86,26 +87,28 @@ function UserData(): ReactElement {
         <h4>Gender:</h4>
         {auth?.user?.patient.gender}
       </div>
-      <div className="history">
-        <h4>History:</h4>
-        <div className="flex">
-          <Dropdown
-            options={getFormattedUserHistory()}
-            value={getFormattedUserHistory()[0]}
-            placeholder="Select an option"
-            className="dropdown"
-            onChange={handleHistoryChange}
-          />
-          <a
-            target="_blank"
-            rel="noreferrer noopener"
-            href={history?.value}
-            className="btn"
-          >
-            View
-          </a>
+      {!!getFormattedUserHistory().length && (
+        <div className="history">
+          <h4>History:</h4>
+          <div className="flex">
+            <Dropdown
+              options={getFormattedUserHistory()}
+              value={getFormattedUserHistory()[0]}
+              placeholder="Select an option"
+              className="dropdown"
+              onChange={handleHistoryChange}
+            />
+            <a
+              target="_blank"
+              rel="noreferrer noopener"
+              href={history?.value}
+              className="btn"
+            >
+              View
+            </a>
+          </div>
         </div>
-      </div>
+      )}
       <div className="item item--alt">
         <h4>Therapies needed:</h4>
         <br />
