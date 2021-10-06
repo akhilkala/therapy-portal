@@ -142,11 +142,13 @@ export default function Landing({}: Props): ReactElement {
             <div className="main">
               <h2>Speech Therapy</h2>
               <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Provident qui consequuntur eius rem iusto nobis consequatur!
-                Labore, exercitationem reprehenderit adipisci at voluptatum
-                optio amet beatae, temporibus doloremque, consectetur rerum
-                consequuntur?
+                Speech therapy encompasses more than just speakng. It can help a
+                special child to express themselves more effectively. It is a
+                teaching process to correctly pronounce words, build
+                conversations and develop languae. It helps to improve the
+                ability to understand and express thoughts, ideas and feelings.
+                A speech therapist provides screening, consulation, assessment,
+                diagnosis, treatmen & counselling for special needs children.
               </p>
             </div>
           </div>
@@ -163,11 +165,13 @@ export default function Landing({}: Props): ReactElement {
             <div className="main">
               <h2>Occupational Therapy</h2>
               <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Provident qui consequuntur eius rem iusto nobis consequatur!
-                Labore, exercitationem reprehenderit adipisci at voluptatum
-                optio amet beatae, temporibus doloremque, consectetur rerum
-                consequuntur?
+                Occupational therapy helps to improve cognative, physical and
+                motor skils of the children to make them more independant and
+                self sufficient. It can also help children who struggle with
+                ASD, SPD, PDD, GDD, ADD, ADHD, SLD. Down's syndrome, hand
+                writing difficulties. ADL difficulties by working throgh various
+                therapies. OT also works on fine motor skills, visio motor
+                skills, self care skills, etc. to improve the quality of life.
               </p>
             </div>
           </div>
@@ -184,11 +188,15 @@ export default function Landing({}: Props): ReactElement {
             <div className="main">
               <h2>Play & Art Therapy</h2>
               <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Provident qui consequuntur eius rem iusto nobis consequatur!
-                Labore, exercitationem reprehenderit adipisci at voluptatum
-                optio amet beatae, temporibus doloremque, consectetur rerum
-                consequuntur?
+                Children cannot express thier emotional and mental health issues
+                in a proper way. Even we as adults find it difficult to express
+                about how we feel. Play method is one of the effective forms of
+                psychotherapy that uses play to help children deal with
+                emotional issues. Through play a child is able to explore thier
+                feelings as well as thier inner world. Art therapy is basically
+                using the creative process of art making to improve and enhance
+                the physical, mental and emotional well being of an individual
+                of all ages.
               </p>
             </div>
           </div>
@@ -205,11 +213,14 @@ export default function Landing({}: Props): ReactElement {
             <div className="main">
               <h2>Counselling</h2>
               <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Provident qui consequuntur eius rem iusto nobis consequatur!
-                Labore, exercitationem reprehenderit adipisci at voluptatum
-                optio amet beatae, temporibus doloremque, consectetur rerum
-                consequuntur?
+                Children with special needs have different behavioral issues.
+                Sessions on behaviour modification techniques help them to
+                modify thier behaviour. Simultaneously, parental counselling is
+                mandatory so that they can make the children practice the same
+                regularly to get the best result. Sessions on techniques of
+                mindful meditation with counsellors would helo them to improve
+                their capacity to control hyperactivity and increase thier
+                ability to concentrate.
               </p>
             </div>
           </div>
@@ -224,13 +235,14 @@ export default function Landing({}: Props): ReactElement {
               }}
             ></div>
             <div className="main">
-              <h2>Clinical psychologist</h2>
+              <h2>Clinical Psychologist</h2>
               <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Provident qui consequuntur eius rem iusto nobis consequatur!
-                Labore, exercitationem reprehenderit adipisci at voluptatum
-                optio amet beatae, temporibus doloremque, consectetur rerum
-                consequuntur?
+                A clinical psychologist's role is very important in special
+                needs children. The foremost thing is assessment followed by
+                guiding the child for his/her early intervention. Counselling of
+                parents for understanding the child's condition is another
+                important role. A clinical psycholoist overall empowers the
+                parent and child for thier betterment.
               </p>
             </div>
           </div>
@@ -247,11 +259,19 @@ export default function Landing({}: Props): ReactElement {
             <div className="main">
               <h2>Special Education</h2>
               <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Provident qui consequuntur eius rem iusto nobis consequatur!
-                Labore, exercitationem reprehenderit adipisci at voluptatum
-                optio amet beatae, temporibus doloremque, consectetur rerum
-                consequuntur?
+                Special education tutoring is one of the most valuble services
+                that a parent can secure for a child who lives with a learning
+                disability. Children with learning disabilities are often
+                overwhelmed by the difficulties they face in a group-lerarning
+                environment. Special education can pave the way to academic
+                success whether your child is dealing with: <br />
+                • Autism Spectrum Disorder (ASD) <br />
+                • Dysgraphia <br />
+                • Dyslexia <br />
+                • Language Processing Trouble <br />
+                • ADHD (Attention deficit hyperactive disorder) <br />
+                • Any other learning-related challenge
+                <br />
               </p>
             </div>
           </div>
