@@ -1,30 +1,30 @@
-import React, { ReactElement } from "react";
-import { NavLink, Route, Switch } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
-import uploadImg from "../assets/upload.png";
-import Input from "../components/Input";
-import useInputState from "../hooks/useInputState";
-import Dropdown from "react-dropdown";
-import "react-dropdown/style.css";
-import { useToasts } from "react-toast-notifications";
-import { get, post } from "../utils/requests";
-import Animation from "../components/Animation";
-import useDocumentTitle from "../hooks/useDocumentTitle";
-import { getTherapy } from "../utils/utilities";
+import React, { ReactElement } from 'react';
+import { NavLink, Route, Switch } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
+import uploadImg from '../assets/upload.png';
+import Input from '../components/Input';
+import useInputState from '../hooks/useInputState';
+import Dropdown from 'react-dropdown';
+import 'react-dropdown/style.css';
+import { useToasts } from 'react-toast-notifications';
+import { get, post } from '../utils/requests';
+import Animation from '../components/Animation';
+import useDocumentTitle from '../hooks/useDocumentTitle';
+import { getTherapy } from '../utils/utilities';
 
 const options = [
-  { value: "0", label: "Vision Therapy" },
-  { value: "1", label: "Speech Therapy" },
-  { value: "2", label: "Occupational Therapy" },
-  { value: "3", label: "Play & Art Therapy" },
-  { value: "4", label: "Counselling" },
-  { value: "5", label: "Clinical Psycology" },
-  { value: "6", label: "Special Education" },
-  { value: "7", label: "Vocational Training" },
+  { value: '0', label: 'Vision Therapy' },
+  { value: '1', label: 'Speech Therapy' },
+  { value: '2', label: 'Occupational Therapy' },
+  { value: '3', label: 'Play & Art Therapy' },
+  { value: '4', label: 'Counselling' },
+  { value: '5', label: 'Clinical Psycology' },
+  { value: '6', label: 'Special Education' },
+  { value: '7', label: 'Vocational Training' },
 ];
 
 export default function Teacher(): ReactElement {
-  useDocumentTitle("Manonaya | Therapist Panel");
+  useDocumentTitle('Manonaya | Therapist Panel');
   const auth = useAuth();
   return (
     <div className="teacher">
@@ -53,11 +53,11 @@ export default function Teacher(): ReactElement {
 }
 
 const DEFAULT_OPTION = {
-  value: "0",
-  label: "Vision Therapy",
+  value: '0',
+  label: 'Vision Therapy',
 };
 
-const DEFAULT_PLACEHOLDER = "No Report Chosen";
+const DEFAULT_PLACEHOLDER = 'No Report Chosen';
 
 function UploadReport(): ReactElement {
   const username = useInputState();
@@ -74,22 +74,22 @@ function UploadReport(): ReactElement {
     const file = fileRef.current.files[0];
 
     if (!username.value || !file)
-      return addToast("All fields are required", { appearance: "error" });
-    if (file.type !== "application/pdf")
-      return addToast("File type not supported", { appearance: "error" });
+      return addToast('All fields are required', { appearance: 'error' });
+    if (file.type !== 'application/pdf')
+      return addToast('File type not supported', { appearance: 'error' });
 
     setLoading(true);
     const data = new FormData();
-    data.append("file", file);
-    data.append("username", username.value);
-    data.append("therapy", option.value);
+    data.append('file', file);
+    data.append('username', username.value);
+    data.append('therapy', option.value);
 
     try {
-      await post("/upload-report", data, {}, true);
+      await post('/upload-report', data, {}, true);
       username.handleReset();
-      return addToast("File uploaded successfully", { appearance: "success" });
+      return addToast('File uploaded successfully', { appearance: 'success' });
     } catch (err: any) {
-      return addToast(err.response.data.message, { appearance: "error" });
+      return addToast(err.response.data.message, { appearance: 'error' });
     } finally {
       setLoading(false);
     }
@@ -117,7 +117,7 @@ function UploadReport(): ReactElement {
         />
         <div className="file">
           <input
-            style={{ display: "none" }}
+            style={{ display: 'none' }}
             type="file"
             name="report"
             id="report"
@@ -145,6 +145,8 @@ function PatientData(): ReactElement {
   const [loading, setLoading] = React.useState(false);
   const { addToast } = useToasts();
   const [data, setData] = React.useState<any>(null);
+  const [therapists, setTherapists] = React.useState<any>([]);
+
   const [history, setHistory] = React.useState<any>(null);
 
   React.useEffect(() => {
@@ -155,14 +157,19 @@ function PatientData(): ReactElement {
   const handleSearch = async () => {
     try {
       setLoading(true);
-      if (!username.value)
-        return addToast("Username is required", { appearance: "error" });
+      if (!username.value) return addToast('Username is required', { appearance: 'error' });
 
       const res = await get(`/user-data/${username.value}`);
 
+      res.therapies.forEach(async (item: any) => {
+        const therapies = await get(`/therapist-data/${item.therapist}`);
+        therapies.option = options[item.therapy].label;
+        setTherapists((prev: any) => [...prev, therapies]);
+      });
+
       setData(res);
     } catch (err: any) {
-      addToast(err.response.data.message, { appearance: "error" });
+      addToast(err.response.data.message, { appearance: 'error' });
     } finally {
       setLoading(false);
     }
@@ -171,7 +178,7 @@ function PatientData(): ReactElement {
   const getFormattedUserHistory = () => {
     if (!data) return [];
     return data?.history.map((history: any) => ({
-      label: history.date.split("T")[0],
+      label: history.date.split('T')[0],
       value: history.fileUrl,
     }));
   };
@@ -184,49 +191,45 @@ function PatientData(): ReactElement {
         <Input
           state={username}
           placeholder="Search for username"
-          icon={<i style={{ cursor: "default" }} className="fas fa-search"></i>}
+          icon={<i style={{ cursor: 'default' }} className="fas fa-search"></i>}
         />
         <button disabled={loading} onClick={handleSearch} className="btn">
           Search
         </button>
       </div>
       {loading && <Animation animation="loading2" />}
-      {!!data && (
+      {!!data ? (
         <main className="main">
           <aside className="left">
-            <Animation width={100} height={100} animation="user" loop={false} />{" "}
-            <div className="item">
-              <h4>Full Name:</h4>
-              {data?.user?.fullName}
-            </div>
-            <div className="item">
-              <h4>Username:</h4>
-              {data?.user?.username}
-            </div>
-            <div className="item">
-              <h4>Age:</h4>
-              {data?.age}
-            </div>
-            <div className="item">
-              <h4>Gender:</h4>
-              {data?.gender}
+            <Animation width={100} height={100} animation="user" loop={false} />{' '}
+            <div className="item-container">
+              <div className="item container-item">
+                <h4>Full Name:</h4>
+                {data?.user?.fullName}
+              </div>
+              <div className="item container-item">
+                <h4>Username:</h4>
+                {data?.user?.username}
+              </div>
+              <div className="item container-item">
+                <h4>Age:</h4>
+                {data?.age}
+              </div>
+              <div className="item container-item">
+                <h4>Gender:</h4>
+                {data?.gender}
+              </div>
             </div>
             <div className="item item--alt">
               <h4>Therapies needed:</h4>
               <br />
               <div className="sub-items">
-                <div className="sub-item">
-                  <span>Vision Therapy</span>
-                  <br /> <h5>Faculty:</h5> Akhil Kala
-                </div>
-                <div className="sub-item">
-                  <span>Vision Therapy</span>
-                  <br /> <h5>Faculty:</h5> Akhil Kala
-                </div>
-                <div className="sub-item">
-                  <span>Vision Therapy</span>
-                  <br /> <h5>Faculty:</h5> Akhil Kala
-                </div>
+                {therapists?.map((therapy: any) => (
+                  <div className="sub-item">
+                    <span>{therapy.option}</span>
+                    <br /> <h5>Faculty:</h5> {therapy.fullName}
+                  </div>
+                ))}
               </div>
             </div>
             <div className="history">
@@ -239,12 +242,7 @@ function PatientData(): ReactElement {
                   className="dropdown"
                   onChange={handleHistoryChange}
                 />
-                <a
-                  target="_blank"
-                  rel="noreferrer noopener"
-                  href={history?.value}
-                  className="btn"
-                >
+                <a target="_blank" rel="noreferrer noopener" href={history?.value} className="btn">
                   View
                 </a>
               </div>
@@ -254,8 +252,8 @@ function PatientData(): ReactElement {
             <section>
               <h4>User Reports</h4>
               <Dropdown
-                options={[...options, { value: "8", label: "No Filter" }]}
-                value={{ value: "8", label: "No Filter" }}
+                options={[...options, { value: '8', label: 'No Filter' }]}
+                value={{ value: '8', label: 'No Filter' }}
                 placeholder="Select an option"
                 className="dropdown"
               />
@@ -268,16 +266,11 @@ function PatientData(): ReactElement {
                     <div className="report-card">
                       <div className="left">
                         <h4>
-                          <span>{getTherapy(report.therapy)}</span> -{" "}
-                          {report.therapist.fullName}
+                          <span>{getTherapy(report.therapy)}</span> - {report.therapist.fullName}
                         </h4>
-                        <span>{`(${report.date.split("T")[0]})`}</span>
+                        <span>{`(${report.date.split('T')[0]})`}</span>
                       </div>
-                      <a
-                        href={report.fileUrl}
-                        target="_blank"
-                        rel="noreferrer noopener"
-                      >
+                      <a href={report.fileUrl} target="_blank" rel="noreferrer noopener">
                         <i className="fa fa-eye"></i>
                       </a>
                     </div>
@@ -286,6 +279,11 @@ function PatientData(): ReactElement {
             </section>
           </aside>
         </main>
+      ) : (
+        <div className="no-data">
+          <h3>Search for a user</h3>
+          <div className="no-data-img"></div>
+        </div>
       )}
     </div>
   );

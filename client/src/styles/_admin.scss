@@ -1,10 +1,11 @@
-.admin{
-    .heading{
+.admin {
+    .heading {
         font-size: 3rem;
         color: $primary;
         text-align: center;
         position: relative;
-        i{
+
+        i {
             position: absolute;
             left: 2rem;
             color: #000a;
@@ -14,40 +15,47 @@
             cursor: pointer;
         }
     }
-    nav{
+
+    nav {
         margin-top: 2rem;
         border-bottom: 1px solid #0003;
-        a{
+
+        a {
             padding: 0 1.5rem;
             font-size: 1.5rem;
             font-weight: 600;
             text-align: center;
-            &:hover{
+
+            &:hover {
                 background: #e8e8e8;
                 border-bottom: 3px solid $primary;
             }
         }
-        .active-link{
+
+        .active-link {
             border-bottom: 3px solid $primary;
         }
     }
-    section{
+
+    section {
         height: 20vh;
         padding: 2rem 1rem 0 1rem;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
     }
-    main{
+
+    main {
         height: 80vh;
     }
 }
 
-.admin-user{
+.admin-user {
     display: flex;
-    .therapist-input{
+
+    .therapist-input {
         transform: translateY(-.45rem);
-        margin-top:1rem;
+        margin-top: 1rem;
         width: 18rem;
         padding: .4rem .5rem;
         font-size: 1.2rem;
@@ -55,41 +63,51 @@
         box-shadow: 0 0 5pt 0.5pt #D3D3D322;
         border: 1px solid #eeea;
         transition: .5s all;
-        &:focus{
+
+        &:focus {
             box-shadow: 0 0 5pt 0.5pt #D3D3D3;
         }
+
         margin-left: 2rem;
         margin-right: 2rem;
     }
-    .center{
+
+    .center {
         justify-content: flex-start;
         align-items: center;
         margin-left: 3rem;
     }
-    .add{
+
+    .add {
         margin-left: 1rem;
         cursor: pointer;
-        &:hover{
+
+        &:hover {
             color: $patient;
         }
     }
-    aside{
-        flex:1;
+
+    aside {
+        flex: 1;
         height: 80vh;
         overflow: auto;
         padding: 2rem;
-        h1{
+
+        h1 {
             text-align: center;
             font-size: 2.35rem;
         }
     }
-    .list{
-        .input-container{
+
+    .list {
+        .input-container {
             width: 65%;
             margin: 1rem auto;
         }
-        .users{
-            .user-card{
+
+        .users {
+            .user-card {
+
                 width: 85%;
                 margin: 1rem auto;
                 display: flex;
@@ -97,58 +115,71 @@
                 padding: .5rem 1rem;
                 justify-content: space-between;
                 border-radius: 4px;
-                box-shadow: 0 0 5pt 0.5pt #D3D3D322;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
                 font-size: 1.25rem;
                 font-weight: bold;
-                .role{
+
+                .role {
                     color: $patient;
-                    &.therapist{
+
+                    &.therapist {
                         color: $therapist;
                     }
                 }
             }
-            .left{
+
+            .left {
                 display: flex;
-                .name{
+
+                .name {
                     margin-right: .75rem;
                     border-right: 1px solid #000;
                     padding-right: .75rem;
                 }
             }
-            .delete{
+
+            .delete {
                 font-weight: normal;
                 font-size: 1rem;
                 cursor: pointer;
             }
         }
     }
-    .create{
+
+    .create {
         border-left: 1px solid #0001;
         display: flex;
         flex-direction: column;
-        .input-container{
+
+        .input-container {
             width: 80%;
             margin: .6rem auto;
         }
-        .switch{
+
+        .switch {
             margin: 1rem auto;
-            button{
+
+            button {
                 padding: 0 .75rem;
                 background-color: inherit;
                 font-weight: bold;
                 font-size: 1.2rem;
-                &:last-child{
+
+                &:last-child {
                     border-left: 1px solid #000;
                 }
-                &.patient{
+
+                &.patient {
                     color: $patient;
                 }
-                &.therapist{
+
+                &.therapist {
                     color: $therapist;
                 }
             }
         }
-        .submit{
+
+        .submit {
             background: $patient;
             color: #fff;
             padding: .5rem;
@@ -159,46 +190,55 @@
             font-size: 1.2rem;
             font-weight: bold;
             margin-top: 1rem;
-            &.therapist{
+
+            &.therapist {
                 background: $therapist;
             }
         }
     }
 }
 
-.admin-feedback{
+.admin-feedback {
     height: 80vh;
     padding: 2rem 0;
     overflow: auto;
-    .input-container{
+
+    .input-container {
         width: 50%;
         margin: auto;
     }
-    .feedback-card{
+
+    .feedback-card {
         width: 50%;
         margin: 1rem auto;
         background-color: #fff;
         box-shadow: 0 0 5pt 0.25pt #D3D3D344;
         padding: 1rem;
     }
-    .top{
+
+    .top {
         display: flex;
         justify-content: space-between;
         font-size: 1.2rem;
     }
-    .name{
+
+    .name {
         font-weight: bold;
-        span{
+
+        span {
             color: $patient;
         }
     }
-    .faculty-name{
+
+    .faculty-name {
         font-weight: bold;
-        span{
+
+        span {
             color: $therapist;
         }
     }
-    .message{
+
+    .message {
         font-size: 1.1rem;
         margin-top: .5rem;
         padding-top: .5rem;
@@ -206,36 +246,42 @@
     }
 }
 
-.admin-actions{
+.admin-actions {
     height: 80vh;
     padding: 2rem 0;
     overflow: auto;
-    h2{
+
+    h2 {
         margin-bottom: .5rem;
     }
-    .action{
+
+    .action {
         display: block;
         height: max-content;
         border-bottom: 1px solid #0005;
         padding-bottom: 1rem;
-        .body{
+
+        .body {
             display: flex;
             align-items: flex-start;
         }
     }
-    .file{
+
+    .file {
         display: flex;
         justify-content: space-between;
         margin-bottom: 2rem;
         margin-left: 1.5rem;
-        label{
+
+        label {
             margin-left: 1rem;
             cursor: pointer;
             background-color: inherit;
             border: 1px solid #ccc;
             color: $primary;
         }
-        .name{
+
+        .name {
             width: 15rem;
             min-width: max-content;
             border-radius: 5px;
@@ -246,26 +292,27 @@
             padding-left: .5rem;
         }
     }
-    .btn{
-        margin-left: 1rem;
-        background-color: $primary;      
 
-        &--alt{
+    .btn {
+        margin-left: 1rem;
+        background-color: $primary;
+
+        &--alt {
             margin-left: 0;
         }
 
-        &--2{
+        &--2 {
             transform: translateY(.25rem);
         }
     }
 
-    .input-container{
+    .input-container {
         margin-top: .25rem;
         margin-bottom: 1rem;
         margin-right: 1rem;
     }
 
-    .inputs{
+    .inputs {
         display: flex;
     }
 }

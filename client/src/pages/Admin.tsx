@@ -1,35 +1,35 @@
-import React, { ReactElement } from "react";
-import { Link, NavLink, Route, Switch } from "react-router-dom";
-import { useToasts } from "react-toast-notifications";
-import Animation from "../components/Animation";
-import Input from "../components/Input";
-import useFetch from "../hooks/useFetch";
-import useInputState from "../hooks/useInputState";
-import ReactTooltip from "react-tooltip";
-import cn from "classnames";
-import { deleteCall, get, post } from "../utils/requests";
-import { useConfirm } from "../hooks/useConfirm";
-import Confrim from "../components/Confirm";
-import useDocumentTitle from "../hooks/useDocumentTitle";
-import { useAuth } from "../context/AuthContext";
-import { User } from "../utils/types";
-import Dropdown from "react-dropdown";
-import "react-dropdown/style.css";
+import React, { ReactElement } from 'react';
+import { Link, NavLink, Route, Switch } from 'react-router-dom';
+import { useToasts } from 'react-toast-notifications';
+import Animation from '../components/Animation';
+import Input from '../components/Input';
+import useFetch from '../hooks/useFetch';
+import useInputState from '../hooks/useInputState';
+import ReactTooltip from 'react-tooltip';
+import cn from 'classnames';
+import { deleteCall, get, post } from '../utils/requests';
+import { useConfirm } from '../hooks/useConfirm';
+import Confrim from '../components/Confirm';
+import useDocumentTitle from '../hooks/useDocumentTitle';
+import { useAuth } from '../context/AuthContext';
+import { User } from '../utils/types';
+import Dropdown from 'react-dropdown';
+import 'react-dropdown/style.css';
 
 const dropdownOptions = [
-  { value: "0", label: "Vision Therapy" },
-  { value: "1", label: "Speech Therapy" },
-  { value: "2", label: "Occupational Therapy" },
-  { value: "3", label: "Play & Art Therapy" },
-  { value: "4", label: "Counselling" },
-  { value: "5", label: "Clinical Psycology" },
-  { value: "6", label: "Special Education" },
-  { value: "7", label: "Vocational Training" },
+  { value: '0', label: 'Vision Therapy' },
+  { value: '1', label: 'Speech Therapy' },
+  { value: '2', label: 'Occupational Therapy' },
+  { value: '3', label: 'Play & Art Therapy' },
+  { value: '4', label: 'Counselling' },
+  { value: '5', label: 'Clinical Psycology' },
+  { value: '6', label: 'Special Education' },
+  { value: '7', label: 'Vocational Training' },
 ];
 
 export default function Admin(): ReactElement {
-  useDocumentTitle("Manonaya | Admin");
-  const adminFetcher = useFetch("/admin/data");
+  useDocumentTitle('Manonaya | Admin');
+  const adminFetcher = useFetch('/admin/data');
   const { addToast } = useToasts();
   const auth = useAuth();
 
@@ -49,12 +49,12 @@ export default function Admin(): ReactElement {
     isTeacher: boolean,
     age: string,
     gender: string,
-    therapies: any
+    therapies: any,
   ) => {
     if (password !== confirmPassword)
-      return addToast("Passwords do not match", { appearance: "error" });
+      return addToast('Passwords do not match', { appearance: 'error' });
     try {
-      await post("/auth/register", {
+      await post('/auth/register', {
         fullName,
         username,
         password,
@@ -64,20 +64,20 @@ export default function Admin(): ReactElement {
         therapies,
       });
     } catch (err: any) {
-      addToast(err.response.data.message, { appearance: "error" });
+      addToast(err.response.data.message, { appearance: 'error' });
       throw err;
     }
     adminFetcher.fetch(false);
-    addToast("User created successfully", { appearance: "success" });
+    addToast('User created successfully', { appearance: 'success' });
   };
 
   const deleteUser = async (id: string) => {
     try {
       const res = await deleteCall(`/admin/delete-user/${id}`);
-      addToast(res.message, { appearance: "success" });
+      addToast(res.message, { appearance: 'success' });
       adminFetcher.fetch(false);
     } catch (err) {
-      addToast("Something went wrong", { appearance: "error" });
+      addToast('Something went wrong', { appearance: 'error' });
     }
   };
 
@@ -118,9 +118,7 @@ export default function Admin(): ReactElement {
           />
           <Route
             path={`/feedback`}
-            render={() => (
-              <AdminFeedback feedback={adminFetcher.data.feedback} />
-            )}
+            render={() => <AdminFeedback feedback={adminFetcher.data.feedback} />}
           />
           <Route path={`/patient-actions`} render={() => <AdminActions />} />
         </Switch>
@@ -139,16 +137,12 @@ interface AdminUserProps {
     isTeacher: boolean,
     age: string,
     gender: string,
-    therapies: any
+    therapies: any,
   ) => Promise<void>;
   deleteUser: (username: string) => Promise<void>;
 }
 
-function AdminUserPanel({
-  users,
-  createUser,
-  deleteUser,
-}: AdminUserProps): ReactElement {
+function AdminUserPanel({ users, createUser, deleteUser }: AdminUserProps): ReactElement {
   const search = useInputState();
   const fullName = useInputState();
   const username = useInputState();
@@ -161,8 +155,8 @@ function AdminUserPanel({
 
   const [therapies, setTherapies] = React.useState([
     {
-      therapist: "",
-      therapy: "0",
+      therapist: '',
+      therapy: '0',
     },
   ]);
 
@@ -176,7 +170,7 @@ function AdminUserPanel({
         isTeacher,
         age.value,
         gender.value,
-        therapies
+        therapies,
       );
       username.handleReset();
       password.handleReset();
@@ -187,8 +181,8 @@ function AdminUserPanel({
       setIsTeacher(false);
       setTherapies([
         {
-          therapist: "",
-          therapy: "0",
+          therapist: '',
+          therapy: '0',
         },
       ]);
     } catch (err) {}
@@ -202,8 +196,8 @@ function AdminUserPanel({
               ...option,
               therapist: value,
             }
-          : option
-      )
+          : option,
+      ),
     );
   };
 
@@ -215,8 +209,8 @@ function AdminUserPanel({
               ...option,
               therapy: dropdownOption.value,
             }
-          : option
-      )
+          : option,
+      ),
     );
   };
 
@@ -228,14 +222,12 @@ function AdminUserPanel({
         <Input
           state={search}
           placeholder="Search"
-          icon={<i style={{ cursor: "default" }} className="fas fa-search"></i>}
+          icon={<i style={{ cursor: 'default' }} className="fas fa-search"></i>}
         />
         <div className="users">
           {users
             .filter((user) => {
-              return user.username
-                .toLowerCase()
-                .includes(search.value.toLowerCase());
+              return user.username.toLowerCase().includes(search.value.toLowerCase());
             })
             .filter((user) => {
               return !user.isAdmin;
@@ -245,14 +237,14 @@ function AdminUserPanel({
                 <div className="user-card">
                   <div className="left">
                     <div className="name">{user.username}</div>
-                    <div className={cn("role", { therapist: user.isTeacher })}>
-                      {user.isTeacher ? "Therapist" : "Patient"}
+                    <div className={cn('role', { therapist: user.isTeacher })}>
+                      {user.isTeacher ? 'Therapist' : 'Patient'}
                     </div>
                   </div>
                   <div
                     onClick={confirmed(
                       () => deleteUser(user._id),
-                      `The account ${user.username} will be permanently deleted`
+                      `The account ${user.username} will be permanently deleted`,
                     )}
                     className="delete"
                   >
@@ -261,32 +253,23 @@ function AdminUserPanel({
                 </div>
               );
             })}
+          {console.log(users)}
         </div>
       </aside>
       <aside className="create">
         <h1>Create user</h1>
         <div className="switch">
-          <button
-            onClick={() => setIsTeacher(false)}
-            className={cn({ patient: !isTeacher })}
-          >
+          <button onClick={() => setIsTeacher(false)} className={cn({ patient: !isTeacher })}>
             Patient
           </button>
-          <button
-            onClick={() => setIsTeacher(true)}
-            className={cn({ therapist: isTeacher })}
-          >
+          <button onClick={() => setIsTeacher(true)} className={cn({ therapist: isTeacher })}>
             Therapist
           </button>
         </div>
         <Input state={fullName} placeholder="Full Name" />
         <Input state={username} placeholder="Username" />
         <Input state={password} placeholder="Password" type="password" />
-        <Input
-          state={confirmPassword}
-          placeholder="Confirm Password"
-          type="password"
-        />
+        <Input state={confirmPassword} placeholder="Confirm Password" type="password" />
         {!isTeacher && (
           <>
             <Input state={age} placeholder="Age" />
@@ -312,8 +295,8 @@ function AdminUserPanel({
                       setTherapies((prev: any) => [
                         ...prev,
                         {
-                          therapist: "",
-                          therapy: "0",
+                          therapist: '',
+                          therapy: '0',
                         },
                       ])
                     }
@@ -326,10 +309,7 @@ function AdminUserPanel({
             ))}
           </>
         )}
-        <button
-          onClick={handleCreate}
-          className={cn("submit", { therapist: isTeacher })}
-        >
+        <button onClick={handleCreate} className={cn('submit', { therapist: isTeacher })}>
           Create
         </button>
       </aside>
@@ -344,7 +324,7 @@ interface AdminFeedbackProps {
       user: {
         username: string;
       };
-    }
+    },
   ];
 }
 
@@ -356,14 +336,12 @@ function AdminFeedback({ feedback }: AdminFeedbackProps): ReactElement {
       <Input
         state={search}
         placeholder="Search by username"
-        icon={<i style={{ cursor: "default" }} className="fas fa-search"></i>}
+        icon={<i style={{ cursor: 'default' }} className="fas fa-search"></i>}
       />
       <div className="list">
         {feedback
           .filter((details) =>
-            details.user.username
-              .toLowerCase()
-              .includes(search.value.toLowerCase())
+            details.user.username.toLowerCase().includes(search.value.toLowerCase()),
           )
           .map((details) => {
             return (
@@ -386,7 +364,7 @@ function AdminActions(): ReactElement {
   const username = useInputState();
   const username2 = useInputState();
   const fileRef = React.useRef<HTMLInputElement>(null);
-  const [placeholder, setPlaceholder] = React.useState("No Report Chosen");
+  const [placeholder, setPlaceholder] = React.useState('No Report Chosen');
   const [loading, setLoading] = React.useState(false);
   const [loading2, setLoading2] = React.useState(false);
   const { addToast } = useToasts();
@@ -407,23 +385,23 @@ function AdminActions(): ReactElement {
     const file = fileRef.current.files[0];
 
     if (!username.value || !file)
-      return addToast("All fields are required", { appearance: "error" });
-    if (file.type !== "application/pdf")
-      return addToast("File type not supported", { appearance: "error" });
+      return addToast('All fields are required', { appearance: 'error' });
+    if (file.type !== 'application/pdf')
+      return addToast('File type not supported', { appearance: 'error' });
 
     setLoading(true);
     const data = new FormData();
-    data.append("file", file);
-    data.append("username", username.value);
+    data.append('file', file);
+    data.append('username', username.value);
 
     try {
-      await post("/history", data, {}, true);
+      await post('/history', data, {}, true);
       username.handleReset();
-      return addToast("History updated successfully", {
-        appearance: "success",
+      return addToast('History updated successfully', {
+        appearance: 'success',
       });
     } catch (err: any) {
-      return addToast(err.response.data.message, { appearance: "error" });
+      return addToast(err.response.data.message, { appearance: 'error' });
     } finally {
       setLoading(false);
     }
@@ -443,7 +421,7 @@ function AdminActions(): ReactElement {
       age.setValue(res.age);
       gender.setValue(res.gender);
     } catch (err: any) {
-      return addToast(err.response.data.message, { appearance: "error" });
+      return addToast(err.response.data.message, { appearance: 'error' });
     } finally {
       setLoading2(false);
     }
@@ -457,7 +435,7 @@ function AdminActions(): ReactElement {
           <Input state={username} placeholder="Username" />
           <div className="file">
             <input
-              style={{ display: "none" }}
+              style={{ display: 'none' }}
               type="file"
               name="report"
               id="report"
@@ -469,11 +447,7 @@ function AdminActions(): ReactElement {
               Upload
             </label>
           </div>
-          <button
-            disabled={loading}
-            onClick={handleUploadHistory}
-            className="btn"
-          >
+          <button disabled={loading} onClick={handleUploadHistory} className="btn">
             Submit
           </button>
         </div>
@@ -482,22 +456,14 @@ function AdminActions(): ReactElement {
         <h2>Get User Data</h2>
         <div className="body">
           <Input state={username2} placeholder="Username" />
-          <button
-            onClick={handleGetData}
-            disabled={loading2}
-            className="btn btn--2"
-          >
+          <button onClick={handleGetData} disabled={loading2} className="btn btn--2">
             Submit
           </button>
         </div>
         {!!data && (
           <>
             <div className="inputs">
-              <Input
-                state={fullName}
-                placeholder="Full Name"
-                label="Full Name"
-              />
+              <Input state={fullName} placeholder="Full Name" label="Full Name" />
               <Input state={age} placeholder="Age" label="Age" />
               <Input state={gender} placeholder="Gender" label="Gender" />
             </div>
