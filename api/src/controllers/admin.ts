@@ -65,3 +65,20 @@ export const getUserData = route(async (req, res) => {
 
   res.status(200).json(data);
 });
+
+export const updateUserData = route(async (req, res) => {
+  const user = await User.findOne({ username: req.body.username });
+  console.log("user");
+  console.log(req.body.username);
+  console.log("user");
+
+  await User.updateOne({ _id: user._id }, { fullName: req.body.fullName });
+  await Patient.updateOne(
+    { user: user._id },
+    {
+      age: req.body.age,
+      gender: req.body.gender,
+    }
+  );
+  res.status(200).json({ success: true });
+});

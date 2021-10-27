@@ -197,22 +197,11 @@
                         margin-bottom: -1rem;
                         margin-top: 1rem;
                     }
+
+                    
                 }
 
-                .sub-items {
-                    display: flex;
-                    gap: 2rem;
-                    flex-wrap: wrap;
-                    padding: 1rem 0;
-
-                    &:not(:last-child) {
-                        border-right: 1px solid #0005;
-                    }
-
-                    span {
-                        color: $therapist;
-                    }
-                }
+                
             }
 
             &:first-child {
@@ -404,6 +393,7 @@
                     display: flex;
                     gap: 1rem;
                     margin-top: -2rem;
+                    justify-content: center;
 
                     .sub-item {
                         padding: 0 1rem;
@@ -413,11 +403,9 @@
                             color: $patient;
                         }
 
-                        &:not(:last-child) {
-                            border-right: 1px solid #0005;
-
-
-                        }
+                        // &:not(:last-child) {
+                        //     border-right: 1px solid #0005;
+                        // }
                     }
                 }
             }
@@ -561,5 +549,20 @@
                 }
             }
         }
+    }
+}
+
+.sub-items {
+    display: flex !important;
+    gap: 2rem;
+    padding: 1rem 0;
+    flex-wrap: wrap !important;
+
+    // &:not(:last-child) {
+    //     border-right: 1px solid #0005;
+    // }
+
+    span {
+        color: $therapist;
     }
 }
