@@ -3,27 +3,41 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.upload = exports.route = void 0;
-var multer_1 = __importDefault(require("multer"));
-var route = function (fn) { return function (req, res, next) {
-    return Promise.resolve(fn(req, res, next)).catch(next);
-}; };
+exports.getTherapy = exports.upload = exports.route = void 0;
+const multer_1 = __importDefault(require("multer"));
+const uuid_1 = require("uuid");
+const route = (fn) => (req, res, next) => Promise.resolve(fn(req, res, next)).catch(next);
 exports.route = route;
-var storage = multer_1.default.diskStorage({
-    destination: function (req, file, cb) {
+const storage = multer_1.default.diskStorage({
+    destination: (req, file, cb) => {
         cb(null, "src/uploads/");
     },
-    filename: function (req, file, cb) {
-        cb(null, new Date().toISOString() + file.originalname);
+    filename: (req, file, cb) => {
+        cb(null, uuid_1.v4() + ".pdf");
     },
 });
-var fileFilter = function (req, file, cb) {
+const fileFilter = (req, file, cb) => {
     if (file.mimetype === "application/pdf")
         cb(null, true);
     else
         cb(null, false);
 };
 exports.upload = multer_1.default({
-    storage: storage,
-    fileFilter: fileFilter,
+    storage,
+    fileFilter,
 });
+const getTherapy = (key) => {
+    const therapies = {
+        "0": "Vision Therapy",
+        "1": "Speech Therapy",
+        "2": "Occupational Therapy",
+        "3": "Play & Art Therapy",
+        "4": "Counselling",
+        "5": "Clinical Psycology",
+        "6": "Special Education",
+        "7": "Vocational Training",
+    };
+    //@ts-ignore
+    return therapies[key];
+};
+exports.getTherapy = getTherapy;

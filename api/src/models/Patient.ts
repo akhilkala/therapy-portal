@@ -1,5 +1,4 @@
 import mongoose, { Document } from "mongoose";
-import bcrypt from "bcrypt";
 
 export interface IPatient extends Document {
   user: mongoose.Schema.Types.ObjectId;

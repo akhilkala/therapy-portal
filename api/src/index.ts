@@ -58,3 +58,7 @@ declare global {
 // { value: "5", label: "Clinical Psycology" },
 // { value: "6", label: "Special Education" },
 // { value: "7", label: "Vocational Training" },
+
+// Change password
+// Forget password
+// add email to model

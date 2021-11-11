@@ -12,15 +12,23 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const User_1 = __importDefault(require("./models/User"));
-exports.default = () => __awaiter(void 0, void 0, void 0, function* () {
-    const exisitng = yield User_1.default.findOne({ username: process.env.ADMIN_USERNAME });
-    if (exisitng)
-        return console.log("Admin already exists");
-    yield new User_1.default({
-        username: process.env.ADMIN_USERNAME,
-        password: process.env.ADMIN_PASSWORD,
-        isAdmin: true,
-    }).save();
-    console.log("Admin created");
-});
+exports.getReports = exports.postHistory = void 0;
+const Patient_1 = __importDefault(require("../models/Patient"));
+const utilities_1 = require("../utils/utilities");
+require("dotenv").config();
+exports.postHistory = utilities_1.route((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const patient = yield Patient_1.default.updateOne({ user: req.body.userId }, {
+        $push: {
+            history: {
+                fileUrl: req.body.files[0],
+            },
+        },
+    }, { new: true, upsert: true });
+    res.status(200).json(patient);
+}));
+exports.getReports = utilities_1.route((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const patient = yield Patient_1.default.findOne({ user: req.user._id })
+        .populate("report.therapist", "fullName")
+        .lean();
+    res.status(200).json(patient.report);
+}));
