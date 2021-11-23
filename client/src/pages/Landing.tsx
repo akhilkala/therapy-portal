@@ -331,17 +331,18 @@ export default function Landing({}: Props): ReactElement {
         <div className="details">
           <div>
             <h3>Name</h3>
-            <p>Someone Doe</p>
+            <p>Manonaya</p>
           </div>
 
           <div>
             <h3>Address</h3>
-            <p>120, Estate street,</p>
-            <p>Some place, California</p>
+            <p>ED 24 Rajdanga Main Road. Kolkata 700107</p>
           </div>
           <div>
-            <h3>Email</h3>
-            <p>abcdef@xyz.in</p>
+            <h3>Phone</h3>
+            <p>033-40038041</p>
+            <p>9433031508</p>
+            <p>9748740555</p>
           </div>
         </div>
 
