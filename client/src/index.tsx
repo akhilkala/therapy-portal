@@ -12,7 +12,7 @@ Modal.setAppElement("#root");
 
 ReactDOM.render(
   <React.StrictMode>
-    <BrowserRouter basename="/index.html">
+    <BrowserRouter basename="/">
       <ErrorBoundary>
         <AuthProvider>
           <ToastProvider autoDismiss autoDismissTimeout={2500}>
